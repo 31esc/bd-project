@@ -4,46 +4,54 @@
 
 Таблица `User`:
 
-| Название          | Описание                   | Тип данных     | Ограничение   |
-|-------------------|----------------------------|----------------|---------------|
-| `user_id`         | Идентификатор пользователя | `SERIAL`       | `PRIMARY KEY` |
-| `firstname`       | Имя пользователя           | `VARCHAR(100)` | `NOT NULL`    |
-| `surname`         | Фамилия пользователя       | `VARCHAR(100)` | `NOT NULL`    |
-| `email`           | Email                      | `VARCHAR(100)` | `NOT NULL`    |
-| `banck_acc_number`| Номер банковского счета    | `INTEGER`      | `NOT NULL`    |
-| `telephone`       | Номер телефона             | `VARCHAR(20)`  | `NOT NULL`    |
+| Название          | Описание                   | Тип данных     | Ограничение                                          |
+|-------------------|----------------------------|----------------|------------------------------------------------------|
+| `user_id`         | Идентификатор пользователя | `SERIAL`       | `PRIMARY KEY`                                        |
+| `firstname`       | Имя пользователя           | `VARCHAR(100)` | `NOT NULL CHECK(firstname SIMILAR TO '[A-Z][a-z]*')` |
+| `surname`         | Фамилия пользователя       | `VARCHAR(100)` | `NOT NULL CHECK(surname SIMILAR TO '[A-Z][a-z]*')`   | 
+| `email`           | Email                      | `VARCHAR(100)` | `NOT NULL CHECK (email LIKE '%@%')`                  |
+| `bank_acc_number` | Номер банковского счета    | `VARCHAR(16)`  | `NOT NULL`                                           |
+| `telephone`       | Номер телефона             | `VARCHAR(16)`  | `NOT NULL CHECK (telephone SIMILAR TO '[0-9]{7,16}')`|
+
+Таблица `User_History`:
+
+| Название          | Описание                       | Тип данных     | Ограничение                                          |
+|-------------------|--------------------------------|----------------|------------------------------------------------------|
+| `user_id`         | Идентификатор пользователя     | `INTEGER`      | `FOREIGN KEY`                                        |
+| `bank_acc_number` | Номер банковского счета        | `VARCHAR(16)`  | `NOT NULL`                                           |
+| `telephone`       | Номер телефона                 | `VARCHAR(16)`  | `NOT NULL CHECK (telephone SIMILAR TO '[0-9]{7,16}')`|
+| `history_data`    | Дата создания записи в истории | `DATE`         | `NOT NULL`                                           |
+
 
 Таблица `Trip_Details`:
 
-| Название          | Описание                   | Тип данных     | Ограничение   |
-|-------------------|----------------------------|----------------|---------------|
-| `trip_id`         | Идентификатор поездки      | `SERIAL`       | `PRIMARY KEY` |
-| `user_id`         | Идентификатор пользователя | `INTEGER`      | `FOREIGN KEY` |
-| `driver_id`       | Идентификатор водителя     | `INTEGER`      | `FOREIGN KEY` |
-| `start_location`  | Координаты начала поездки  | `POINT`        | `NOT NULL`    |
-| `destination`     | Координаты конца поездки   | `POINT`        | `NOT NULL`    |
-| `start_time`      | Время начала поездки       | `DATE`         | `NOT NULL`    |
-| `end_time`        | Время конца поездки        | `DATE`         | `NOT NULL`    |
-| `price`           | Цена за поездку            | `INTEGER`      | `NOT NULL`    |
+| Название          | Описание                   | Тип данных     | Ограничение                 |
+|-------------------|----------------------------|----------------|-----------------------------|
+| `user_id`         | Идентификатор пользователя | `INTEGER`      | `FOREIGN KEY`               |
+| `driver_id`       | Идентификатор водителя     | `INTEGER`      | `FOREIGN KEY`               |
+| `start_location`  | Координаты начала поездки  | `POINT`        | `NOT NULL`                  |
+| `destination`     | Координаты конца поездки   | `POINT`        | `NOT NULL`                  |
+| `start_time`      | Время начала поездки       | `DATE`         | `NOT NULL`                  |
+| `end_time`        | Время конца поездки        | `DATE`         | `NOT NULL`                  |
+| `price`           | Цена за поездку            | `INTEGER`      | `NOT NULL CHECK(price > 0)` |
 
 Таблица `Driver`:
 
-| Название             | Описание                  | Тип данных     | Ограничение   |
-|----------------------|---------------------------|----------------|---------------|
-| `driver_id`          | Идентификатор водителя    | `SERIAL`       | `PRIMARY KEY` |
-| `firstname`          | Имя водителя              | `VARCHAR(100)` | `NOT NULL`    |
-| `surname`            | Фамилия водителя          | `VARCHAR(100)` | `NOT NULL`    |
-| `email`              | Email                     | `VARCHAR(100)` | `NOT NULL`    |
-| `banck_acc_number`   | Номер банковского счета   | `INTEGER`      | `NOT NULL`    |
-| `telephone`          | Номер телефона            | `VARCHAR(20)`  | `NOT NULL`    |
-| `date_of_employment` | Дата устройства на работу | `DATE`         | `NOT NULL`    |
-| `date_of_dismissal`  | Дата увольнения           | `DATE`         |               |
+| Название             | Описание                  | Тип данных     | Ограничение                                          |
+|----------------------|---------------------------|----------------|------------------------------------------------------|
+| `driver_id`          | Идентификатор водителя    | `SERIAL`       | `PRIMARY KEY`                                        |
+| `firstname`          | Имя водителя              | `VARCHAR(100)` | `NOT NULL CHECK(firstname SIMILAR TO '[A-Z][a-z]*')` |
+| `surname`            | Фамилия водителя          | `VARCHAR(100)` | `NOT NULL CHECK(surname SIMILAR TO '[A-Z][a-z]*')`   |
+| `email`              | Email                     | `VARCHAR(100)` | `NOT NULL CHECK (email LIKE '%@%')`                  |
+| `bank_acc_number`    | Номер банковского счета   | `VARCHAR(16)`  | `NOT NULL`                                           |
+| `telephone`          | Номер телефона            | `VARCHAR(16)`  | `NOT NULL CHECK (telephone SIMILAR TO '[0-9]{7,16}')`|
+| `date_of_employment` | Дата устройства на работу | `DATE`         | `NOT NULL`                                           |
+| `date_of_dismissal`  | Дата увольнения           | `DATE`         |                                                      |
 
 Таблица `Driver_Car`:
 
 | Название             | Описание                  | Тип данных     | Ограничение   |
 |----------------------|---------------------------|----------------|---------------|
-| `driver_car_id`      | Идентификатор связи       | `SERIAL`       | `PRIMARY KEY` |
 | `car_id`             | Идентификатор автомобиля  | `INTEGER`      | `FOREIGN KEY` |
 | `driver_id`          | Идентификатор водителя    | `INTEGER`      | `FOREIGN KEY` |
 
@@ -61,4 +69,4 @@
 | Название               | Описание                  | Тип данных     | Ограничение   |
 |------------------------|---------------------------|----------------|---------------|
 | `model`                | Модель автомобиля         | `VARCHAR(100)` | `PRIMARY KEY` |
-| `tariff`               | Тариф автомобиля          | `VARCHAR(100)` | `NOT NULL`    |
+| `tariff`               | Тариф автомобиля          | `ENUM`         | `NOT NULL`    |
