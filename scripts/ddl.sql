@@ -43,7 +43,8 @@ CREATE TABLE project.Trip_Details (
     PRIMARY KEY (user_id, driver_id, start_time)
 );
 
-CREATE TYPE tariff_type as ENUM ('econom', 'business', 'comfortplus', 'vip', 'ultimate');
+DROP TYPE IF EXISTS tariff_type CASCADE;
+CREATE TYPE tariff_type as ENUM ('econom', 'comfortplus', 'business', 'vip', 'ultimate');
 
 DROP TABLE IF EXISTS project.Tariff CASCADE;
 CREATE TABLE project.Tariff (
