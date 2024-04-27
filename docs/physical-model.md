@@ -20,7 +20,7 @@
 | `user_id`         | Идентификатор пользователя     | `INTEGER`      | `FOREIGN KEY`                                        |
 | `bank_acc_number` | Номер банковского счета        | `VARCHAR(16)`  | `NOT NULL`                                           |
 | `telephone`       | Номер телефона                 | `VARCHAR(16)`  | `NOT NULL CHECK (telephone SIMILAR TO '[0-9]{7,16}')`|
-| `history_data`    | Дата создания записи в истории | `DATE`         | `NOT NULL`                                           |
+| `history_data`    | Дата создания записи в истории | `TIMESTAMP`    | `NOT NULL`                                           |
 
 
 Таблица `Trip_Details`:
@@ -31,8 +31,8 @@
 | `driver_id`       | Идентификатор водителя     | `INTEGER`      | `FOREIGN KEY`               |
 | `start_location`  | Координаты начала поездки  | `POINT`        | `NOT NULL`                  |
 | `destination`     | Координаты конца поездки   | `POINT`        | `NOT NULL`                  |
-| `start_time`      | Время начала поездки       | `DATE`         | `NOT NULL`                  |
-| `end_time`        | Время конца поездки        | `DATE`         | `NOT NULL`                  |
+| `start_time`      | Время начала поездки       | `TIMESTAMP`    | `NOT NULL`                  |
+| `end_time`        | Время конца поездки        | `TIMESTAMP`    | `NOT NULL`                  |
 | `price`           | Цена за поездку            | `INTEGER`      | `NOT NULL CHECK(price > 0)` |
 
 Таблица `Driver`:
@@ -45,8 +45,8 @@
 | `email`              | Email                     | `VARCHAR(100)` | `NOT NULL CHECK (email LIKE '%@%')`                  |
 | `bank_acc_number`    | Номер банковского счета   | `VARCHAR(16)`  | `NOT NULL`                                           |
 | `telephone`          | Номер телефона            | `VARCHAR(16)`  | `NOT NULL CHECK (telephone SIMILAR TO '[0-9]{7,16}')`|
-| `date_of_employment` | Дата устройства на работу | `DATE`         | `NOT NULL`                                           |
-| `date_of_dismissal`  | Дата увольнения           | `DATE`         |                                                      |
+| `date_of_employment` | Дата устройства на работу | `TIMESTAMP`    | `NOT NULL`                                           |
+| `date_of_dismissal`  | Дата увольнения           | `TIMESTAMP`    |                                                      |
 
 Таблица `Driver_Car`:
 

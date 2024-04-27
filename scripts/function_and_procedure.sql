@@ -24,7 +24,7 @@ BEGIN
     WHERE user_id = cur_user_id;
 
     INSERT INTO project.user_history (user_id, bank_acc_number, telephone, history_data)
-    VALUES (cur_user_id, old_bank_acc_number, old_telephone, CURRENT_DATE);
+    VALUES (cur_user_id, old_bank_acc_number, old_telephone, CURRENT_TIMESTAMP);
 END $$;
 
 -- Количество поездок водителя
@@ -48,8 +48,8 @@ RETURNS TABLE (
     driver_id INTEGER,
     start_location POINT,
     destination POINT,
-    start_time DATE,
-    end_time DATE,
+    start_time TIMESTAMP,
+    end_time TIMESTAMP,
     price INTEGER
 ) AS $$
 BEGIN
@@ -59,8 +59,3 @@ BEGIN
     WHERE td.user_id = $1;
 END;
 $$ LANGUAGE plpgsql;
-
-
--- CALL update_user(2, '4017277279110001', '89962084222');
--- SELECT get_driver_trip_count(2);
--- SELECT get_user_trips(2);

@@ -15,7 +15,7 @@ CREATE TABLE project.User_History (
     user_id INTEGER REFERENCES project.User(user_id),
     bank_acc_number VARCHAR(16) NOT NULL,
     telephone VARCHAR(16) NOT NULL CHECK (telephone SIMILAR TO '[0-9]{7,16}'),
-    history_data DATE NOT NULL,
+    history_data TIMESTAMP NOT NULL,
     PRIMARY KEY (user_id, history_data)
 );
 
@@ -27,8 +27,8 @@ CREATE TABLE project.Driver (
     email VARCHAR(100) NOT NULL CHECK (email LIKE '%@%'),
     bank_acc_number VARCHAR(16) NOT NULL,
     telephone VARCHAR(16) NOT NULL CHECK (telephone SIMILAR TO '[0-9]{7,16}'),
-    date_of_employment DATE NOT NULL,
-    date_of_dismissal DATE DEFAULT NULL
+    date_of_employment TIMESTAMP NOT NULL,
+    date_of_dismissal TIMESTAMP DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS project.Trip_Details CASCADE;
@@ -37,8 +37,8 @@ CREATE TABLE project.Trip_Details (
     driver_id INTEGER REFERENCES project.Driver(driver_id),
     start_location POINT NOT NULL,
     destination POINT NOT NULL,
-    start_time DATE NOT NULL,
-    end_time DATE NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
     price INTEGER NOT NULL CHECK(price > 0),
     PRIMARY KEY (user_id, driver_id, start_time)
 );
